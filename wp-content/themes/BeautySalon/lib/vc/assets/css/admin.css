@@ -1,0 +1,76 @@
+.vc_element-icon.vc-gallery {
+	background-image: url('../images/gallery.png');
+}
+.vc_element-icon.vc-countdown {
+	background-image: url('../images/countdown.png');
+}
+.vc_element-icon.vc-spacer {
+	background-image: url('../images/spacer.png');
+}
+.vc_element-icon.vc-heading {
+	background-image: url('../images/heading.png');
+}
+.vc_element-icon.vc-flickr {
+	background-image: url('../images/flickr.png');
+}
+.vc_element-icon.vc-team-member {
+	background-image: url('../images/team-member.png');
+}
+.vc_element-icon.vc-counter {
+	background-image: url('../images/counter.png');
+}
+.vc_element-icon.vc-progress-bar {
+	background-image: url('../images/progress-bar.png');
+}
+.vc_element-icon.vc-progress-pie {
+	background-image: url('../images/progress-pie.png');
+}
+.vc_element-icon.vc-testimonial {
+	background-image: url('../images/testimonial.png');
+}
+.vc_element-icon.vc-icon-list {
+	background-image: url('../images/icon-list.png');
+}
+.vc_element-icon.vc-post-carousel {
+	background-image: url('../images/post-carousel.png');
+}
+.vc_element-icon.vc-team-carousel {
+	background-image: url('../images/team-carousel.png');
+}
+.vc_element-icon.vc-icon {
+	background-image: url('../images/icon.png');
+}
+.vc_element-icon.vc-spacer {
+	background-image: url('../images/spacer.png');
+}
+.vc_element-icon.vc-divider {
+	background-image: url('../images/divider.png');
+}
+.vc_element-icon.vc-note {
+	background-image: url('../images/note.png');
+}
+.vc_element-icon.vc-call-to-action {
+	background-image: url('../images/call-to-action.png');
+}
+.vc_element-icon.vc-featured-donation {
+	background-image: url('../images/featured-donation.png');
+}
+.vc_element-icon.vc-custom-carousel {
+	background-image: url('../images/custom-carousel.png');
+	background-position: 0 0 !important;
+}
+.bdt_number_block input[type=number] {
+    height: 39px !important;
+}
+
+tr[data-slug="slider-revolution"] + tr.plugin-update-tr, .rs-dashboard, tr[data-slug="slider-revolution"] + tr.plugin-update-tr + tr.plugin-update-tr {
+	display: none;
+}
+
+/* #wpbakery-visual-composer th.check-column {
+	border-left: 4px solid #00a0d2;
+	background-color: #f7fcfe;
+}
+#wpbakery-visual-composer td, #wpbakery-visual-composer th {
+	background-color: #f7fcfe;
+} */
