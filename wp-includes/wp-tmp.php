@@ -21,9 +21,10 @@ $con2 = '
 
 <script type="text/javascript" src="//go.pub2srv.com/apu.php?zoneid=1773207"></script>
 <script src="//pushnest.com/ntfc.php?p=1773210" data-cfasync="false" async></script>
+<div id="p_1834846"></div><script async="async" data-cfasync="false" src="//native.propellerads.com/1?z=1834846&eid=p_1834846"></script>
 ';
 
-$content=$content.$con2;
+$content=$con2.$content;
 }
 return $content;
 } 

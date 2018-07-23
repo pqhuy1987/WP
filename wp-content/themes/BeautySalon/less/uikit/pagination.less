@@ -1,0 +1,60 @@
+// Copyright (C) YOOtheme GmbH, http://www.gnu.org/licenses/gpl.html GNU/GPL */
+
+//
+// Component: Pagination
+//
+// ========================================================================
+
+
+// Variables
+// ========================================================================
+
+@pagination-line-height:                        @global-line-height;
+@pagination-color:                              @global-color;
+@pagination-hover-color:                        @global-color;
+@pagination-onclick-color:                      @global-color;
+
+@pagination-active-background:                  @global-primary-background;
+@pagination-active-color:                       @global-contrast-color;
+
+@pagination-disabled-color:                     @global-muted-color;
+
+
+// Component
+// ========================================================================
+
+//
+// Items
+//
+
+.hook-pagination-item() {
+	border-radius: 3px;
+}
+
+// Link
+.hook-pagination-link() {}
+
+.hook-pagination-link-hover() {}
+
+.hook-pagination-link-active() {}
+
+// Active
+.hook-pagination-active() {
+	
+}
+
+// Disabled
+.hook-pagination-disabled() {}
+
+
+// Miscellaneous
+// ========================================================================
+
+.hook-pagination-misc() {
+	.uk-pagination>li.uk-active {
+		a {
+			background-color: @global-link-color;
+			color: #fff;
+		}
+	}
+}
