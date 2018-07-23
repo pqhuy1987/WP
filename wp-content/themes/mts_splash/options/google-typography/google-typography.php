@@ -72,7 +72,7 @@ class mtsGoogleTypography {
 			"'MS Serif', 'New York', sans-serif"					=> "'MS Serif', 'New York', sans-serif",
 			"'Palatino Linotype', 'Book Antiqua', Palatino, serif"  => "'Palatino Linotype', 'Book Antiqua', Palatino, serif",
 			"Tahoma,Geneva, sans-serif"							 => "Tahoma, Geneva, sans-serif",
-			"'Times New Roman', Times,serif"						=> "'Times New Roman', Times, serif",
+			"'Bree Serif', Times,serif"						=> "'Bree Serif', Times, serif",
 			"'Trebuchet MS', Helvetica, sans-serif"				 => "'Trebuchet MS', Helvetica, sans-serif",
 			"Verdana, Geneva, sans-serif"						   => "Verdana, Geneva, sans-serif",	
 		);

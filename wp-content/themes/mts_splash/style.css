@@ -407,10 +407,9 @@ body > header {
 	padding: 11px 13px;
 	color: #989898;
 	text-decoration: none;
-	border-right: 1px solid #eeeeee;
 }
 .primary-navigation .navigation .current-menu-item > a {
-	color: #333333!important;
+	color: #3b81bf!important;
 	background: rgba(255, 255, 255, 0.6);
 }
 .primary-navigation .navigation li a {

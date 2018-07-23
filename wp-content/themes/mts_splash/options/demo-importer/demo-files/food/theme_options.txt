@@ -16,7 +16,7 @@
 a#pull { padding: 10px 0!important; color: #444!important; }
 a#pull:after { right: 0!important; }
 .widget-header { margin-top: 30px!important; }
-.primary-navigation .navigation .current-menu-item > a { color: #fff!important; }
+.primary-navigation .navigation .current-menu-item > a { color: #3b81bf!important; }
 .primary-navigation .navigation ul li ul li { background: transparent!important; }
 .primary-navigation .navigation li a { line-height: 1!important; }
 }
