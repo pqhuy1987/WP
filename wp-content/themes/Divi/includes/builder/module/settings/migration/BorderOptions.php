@@ -38,6 +38,7 @@ class ET_Builder_Module_Settings_Migration_BorderOptions extends ET_Builder_Modu
 		parent::__construct();
 
 		self::$_bb_excluded_name_changes[] = 'use_border_color';
+		self::$_bb_excluded_name_changes[] = 'use_focus_border_color';
 	}
 
 	public function _get_border_style_default( $module_slug, $field_name ) {
@@ -217,7 +218,7 @@ class ET_Builder_Module_Settings_Migration_BorderOptions extends ET_Builder_Modu
 		);
 	}
 
-	public function migrate( $field_name, $current_value, $module_slug, $saved_value, $saved_field_name, $attrs ) {
+	public function migrate( $field_name, $current_value, $module_slug, $saved_value, $saved_field_name, $attrs, $content ) {
 		// Border Radius setting migration setting
 		if ( in_array( $module_slug, $this->get_modules( 'border_radius' ) ) ) {
 			if ( 'border_radius' === $saved_field_name ) {

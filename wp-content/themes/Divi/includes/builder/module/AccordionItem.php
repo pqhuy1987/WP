@@ -3,24 +3,15 @@
 class ET_Builder_Module_Accordion_Item extends ET_Builder_Module {
 	function init() {
 		$this->name                  = esc_html__( 'Accordion', 'et_builder' );
+		$this->plural                = esc_html__( 'Accordions', 'et_builder' );
 		$this->slug                  = 'et_pb_accordion_item';
-		$this->fb_support            = true;
+		$this->vb_support            = 'on';
 		$this->type                  = 'child';
 		$this->child_title_var       = 'title';
-		$this->no_shortcode_callback = true;
+		$this->no_render = true;
 		$this->main_css_element      = '%%order_class%%.et_pb_toggle';
 
-		$this->whitelisted_fields = array(
-			'title',
-			'content_new',
-			'open_toggle_background_color',
-			'open_toggle_text_color',
-			'closed_toggle_background_color',
-			'closed_toggle_text_color',
-			'icon_color',
-		);
-
-		$this->options_toggles = array(
+		$this->settings_modal_toggles = array(
 			'general'  => array(
 				'toggles' => array(
 					'main_content' => esc_html__( 'Text', 'et_builder' ),
@@ -38,25 +29,34 @@ class ET_Builder_Module_Accordion_Item extends ET_Builder_Module {
 			),
 		);
 
-		$this->advanced_options = array(
-			'background'            => array(),
-			'border'                => array(
-				'css' => array(
-					'main' => array(
-						'border_radii'  => "%%parent_class%% .et_pb_module{$this->main_css_element}",
-						'border_styles' => "%%parent_class%% .et_pb_module{$this->main_css_element}",
-					)
-				),
-				'defaults' => array(
-					'border_radii' => 'on|0px|0px|0px|0px',
-					'border_styles' => array(
-						'width' => '1px',
-						'color' => '#d9d9d9',
-						'style' => 'solid',
+		$this->advanced_fields = array(
+			'borders'               => array(
+				'default' => array(
+					'css' => array(
+						'main' => array(
+							// Accordion Item can use %%parent_class%% because its slug is parent_slug + `_item` suffix
+							'border_radii'  => "%%parent_class%% .et_pb_module{$this->main_css_element}",
+							'border_styles' => "%%parent_class%% .et_pb_module{$this->main_css_element}",
+						)
 					),
-				)
+					'defaults' => array(
+						'border_radii' => 'on||||',
+						'border_styles' => array(
+							'width' => '1px',
+							'color' => '#d9d9d9',
+							'style' => 'solid',
+						),
+					),
+				),
 			),
-			'custom_margin_padding' => array(
+			'box_shadow'            => array(
+				'default' => array(
+					'css' => array(
+						'important' => true,
+					),
+				),
+			),
+			'margin_padding' => array(
 				'css' => array(
 					'important' => 'all',
 				),
@@ -71,10 +71,11 @@ class ET_Builder_Module_Accordion_Item extends ET_Builder_Module {
 					'text_orientation' => '%%order_class%%',
 				),
 			),
-			'filters' => array(),
+			'fonts'                 => false,
+			'button'                => false,
 		);
 
-		$this->custom_css_options = array(
+		$this->custom_css_fields = array(
 			'toggle' => array(
 				'label'    => esc_html__( 'Toggle', 'et_builder' ),
 			),
@@ -96,6 +97,13 @@ class ET_Builder_Module_Accordion_Item extends ET_Builder_Module {
 				'selector' => '.et_pb_toggle_content',
 			),
 		);
+
+		$this->help_videos = array(
+			array(
+				'id'   => esc_html( 'OBbuKXTJyj8' ),
+				'name' => esc_html__( 'An introduction to the Accordion module', 'et_builder' ),
+			),
+		);
 	}
 
 	function get_fields() {
@@ -106,13 +114,15 @@ class ET_Builder_Module_Accordion_Item extends ET_Builder_Module {
 				'option_category' => 'basic_option',
 				'description'     => esc_html__( 'The title will appear above the content and when the toggle is closed.', 'et_builder' ),
 				'toggle_slug'     => 'main_content',
+				'dynamic_content' => 'text',
 			),
-			'content_new' => array(
+			'content' => array(
 				'label'           => esc_html__( 'Content', 'et_builder' ),
 				'type'            => 'tiny_mce',
 				'option_category' => 'basic_option',
 				'description'     => esc_html__( 'Here you can define the content that will be placed within the current tab.', 'et_builder' ),
 				'toggle_slug'     => 'main_content',
+				'dynamic_content' => 'text',
 			),
 			'open_toggle_text_color' => array(
 				'label'             => esc_html__( 'Open Toggle Text Color', 'et_builder' ),
@@ -120,6 +130,7 @@ class ET_Builder_Module_Accordion_Item extends ET_Builder_Module {
 				'custom_color'      => true,
 				'tab_slug'          => 'advanced',
 				'toggle_slug'       => 'toggle',
+				'hover'             => 'tabs',
 			),
 			'open_toggle_background_color' => array(
 				'label'             => esc_html__( 'Open Toggle Background Color', 'et_builder' ),
@@ -127,6 +138,7 @@ class ET_Builder_Module_Accordion_Item extends ET_Builder_Module {
 				'custom_color'      => true,
 				'tab_slug'          => 'advanced',
 				'toggle_slug'       => 'toggle',
+				'hover'             => 'tabs',
 			),
 			'closed_toggle_text_color' => array(
 				'label'             => esc_html__( 'Closed Toggle Text Color', 'et_builder' ),
@@ -134,6 +146,7 @@ class ET_Builder_Module_Accordion_Item extends ET_Builder_Module {
 				'custom_color'      => true,
 				'tab_slug'          => 'advanced',
 				'toggle_slug'       => 'toggle',
+				'hover'             => 'tabs',
 			),
 			'closed_toggle_background_color' => array(
 				'label'             => esc_html__( 'Closed Toggle Background Color', 'et_builder' ),
@@ -141,6 +154,7 @@ class ET_Builder_Module_Accordion_Item extends ET_Builder_Module {
 				'custom_color'      => true,
 				'tab_slug'          => 'advanced',
 				'toggle_slug'       => 'toggle',
+				'hover'             => 'tabs',
 			),
 			'icon_color' => array(
 				'label'             => esc_html__( 'Icon Color', 'et_builder' ),
@@ -148,6 +162,7 @@ class ET_Builder_Module_Accordion_Item extends ET_Builder_Module {
 				'custom_color'      => true,
 				'tab_slug'          => 'advanced',
 				'toggle_slug'       => 'icon',
+				'hover'             => 'tabs',
 			),
 		);
 		return $fields;

@@ -10,7 +10,7 @@ class ET_Builder_Module_Settings_Migration_ShopModuleSlugs extends ET_Builder_Mo
 		return $modules;
 	}
 
-	public function migrate( $field_name, $current_value, $module_slug, $saved_value, $saved_field_name, $attrs ) {
+	public function migrate( $field_name, $current_value, $module_slug, $saved_value, $saved_field_name, $attrs, $content ) {
 		if ( ! class_exists( 'WooCommerce' ) ) {
 			return $current_value;
 		}
@@ -32,7 +32,7 @@ class ET_Builder_Module_Settings_Migration_ShopModuleSlugs extends ET_Builder_Mo
 
 				return implode( ",", $new_categories );
 			case '_builder_version' :
-				return et_get_theme_version();
+				return ET_BUILDER_PRODUCT_VERSION;
 			default :
 				return $current_value;
 		}

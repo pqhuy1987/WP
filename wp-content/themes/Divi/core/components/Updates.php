@@ -23,8 +23,8 @@ final class ET_Core_Updates {
 		// Don't allow more than one instance of the class
 		if ( isset( self::$_this ) ) {
 			wp_die( sprintf( esc_html__( '%s: You cannot create a second instance of this class.', 'et-core' ),
-				get_class( $this ) )
-			);
+				esc_html( get_class( $this ) )
+			) );
 		}
 
 		self::$_this = $this;
@@ -122,9 +122,13 @@ final class ET_Core_Updates {
 	 * @return void
 	 */
 	function get_options() {
-		$this->options = get_option( 'et_automatic_updates_options' );
+		if ( ! $this->options = get_site_option( 'et_automatic_updates_options' ) ) {
+			$this->options = get_option( 'et_automatic_updates_options' );
+		}
 
-		$this->account_status = get_option( 'et_account_status' );
+		if ( ! $this->account_status = get_site_option( 'et_account_status' ) ) {
+			$this->account_status = get_option( 'et_account_status' );
+		}
 	}
 
 	function load_scripts_styles( $hook ) {
@@ -141,7 +145,7 @@ final class ET_Core_Updates {
 	 * @return void
 	 */
 	function maybe_update_account_status() {
-		$last_checked = get_option( 'et_account_status_last_checked' );
+		$last_checked = get_site_option( 'et_account_status_last_checked' );
 
 		$timeout = 12 * HOUR_IN_SECONDS;
 
@@ -161,7 +165,7 @@ final class ET_Core_Updates {
 	function check_is_active_account() {
 		global $wp_version;
 
-		if ( ! isset( $this->options['username'] ) || '' == trim( $this->options['username'] ) ) {
+		if ( ! isset( $this->options['username'] ) || '' === trim( $this->options['username'] ) ) {
 			return;
 		}
 
@@ -183,15 +187,15 @@ final class ET_Core_Updates {
 			$request = wp_remote_post( 'https://cdn.elegantthemes.com/api/api_downloads.php', $options );
 		}
 
-		if ( ! is_wp_error( $request ) && wp_remote_retrieve_response_code( $request ) == 200 ){
+		if ( ! is_wp_error( $request ) && wp_remote_retrieve_response_code( $request ) === 200 ){
 			$response = wp_remote_retrieve_body( $request );
 
 			if ( ! empty( $response ) ) {
 				if ( in_array( $response, array( 'expired', 'active', 'not_found' ) ) ) {
 					$this->account_status = $response;
 
-					update_option( 'et_account_status', $this->account_status );
-					update_option( 'et_account_status_last_checked', time() );
+					update_site_option( 'et_account_status', $this->account_status );
+					update_site_option( 'et_account_status_last_checked', time() );
 				}
 			}
 		}
@@ -232,7 +236,7 @@ final class ET_Core_Updates {
 			$plugins_request = wp_remote_post( 'https://cdn.elegantthemes.com/api/api.php', $options );
 		}
 
-		if ( ! is_wp_error( $plugins_request ) && wp_remote_retrieve_response_code( $plugins_request ) == 200 ){
+		if ( ! is_wp_error( $plugins_request ) && wp_remote_retrieve_response_code( $plugins_request ) === 200 ){
 			$plugins_response = unserialize( wp_remote_retrieve_body( $plugins_request ) );
 
 			if ( ! empty( $plugins_response ) ) {
@@ -331,7 +335,7 @@ final class ET_Core_Updates {
 			$theme_request = wp_remote_post( 'https://cdn.elegantthemes.com/api/api.php', $options );
 		}
 
-		if ( ! is_wp_error( $theme_request ) && wp_remote_retrieve_response_code( $theme_request ) == 200 ){
+		if ( ! is_wp_error( $theme_request ) && wp_remote_retrieve_response_code( $theme_request ) === 200 ){
 			$theme_response = unserialize( wp_remote_retrieve_body( $theme_request ) );
 
 			if ( ! empty( $theme_response ) ) {
@@ -343,7 +347,7 @@ final class ET_Core_Updates {
 						$this->account_status = 'active';
 					}
 
-					update_option( 'et_account_status', $this->account_status );
+					update_site_option( 'et_account_status', $this->account_status );
 
 					break;
 				}

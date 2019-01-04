@@ -3,74 +3,17 @@
 class ET_Builder_Module_Fullwidth_Header extends ET_Builder_Module {
 	function init() {
 		$this->name             = esc_html__( 'Fullwidth Header', 'et_builder' );
+		$this->plural           = esc_html__( 'Fullwidth Headers', 'et_builder' );
 		$this->slug             = 'et_pb_fullwidth_header';
-		$this->fb_support       = true;
+		$this->vb_support       = 'on';
 		$this->fullwidth        = true;
 		$this->main_css_element = '%%order_class%%';
 
-		$this->whitelisted_fields = array(
-			'title',
-			'subhead',
-			'background_layout',
-			'text_orientation',
-			'header_fullscreen',
-			'header_scroll_down',
-			'scroll_down_icon',
-			'scroll_down_icon_color',
-			'scroll_down_icon_size',
-			'scroll_down_icon_size_tablet',
-			'scroll_down_icon_size_phone',
-			'scroll_down_icon_size_last_edited',
-			'content_max_width',
-			'content_max_width_tablet',
-			'content_max_width_phone',
-			'content_max_width_last_edited',
-			'title_font_color',
-			'subhead_font_color',
-			'content_font_color',
-			'button_one_text',
-			'button_one_url',
-			'button_two_text',
-			'button_two_url',
-			'background_image',
-			'background_overlay_color',
-			'parallax',
-			'parallax_method',
-			'background_size',
-			'background_position',
-			'background_repeat',
-			'background_blend',
-			'logo_image_url',
-			'logo_title',
-			'logo_alt_text',
-			'content_orientation',
-			'header_image_url',
-			'image_orientation',
-			'content_new',
-			'admin_label',
-			'module_id',
-			'module_class',
-		);
-
-		$this->fields_defaults = array(
-			'background_layout'   => array( 'light' ),
-			'text_orientation'    => array( 'left' ),
-			'header_fullscreen'   => array( 'off' ),
-			'header_scroll_down'  => array( 'off' ),
-			'scroll_down_icon'    => array( ';', 'add_default_setting' ),
-			'parallax'            => array( 'off' ),
-			'parallax_method'     => array( 'off' ),
-			'content_orientation' => array( 'center' ),
-			'image_orientation'   => array( 'center' ),
-		);
-
-		$this->options_toggles = array(
+		$this->settings_modal_toggles = array(
 			'general'  => array(
 				'toggles' => array(
 					'main_content' => esc_html__( 'Text', 'et_builder' ),
-					'links'        => esc_html__( 'Links', 'et_builder' ),
 					'images'       => esc_html__( 'Images', 'et_builder' ),
-					'background'   => esc_html__( 'Background', 'et_builder' ),
 				),
 			),
 			'advanced' => array(
@@ -101,8 +44,8 @@ class ET_Builder_Module_Fullwidth_Header extends ET_Builder_Module {
 			),
 		);
 
-		$this->advanced_options = array(
-			'fonts' => array(
+		$this->advanced_fields = array(
+			'fonts'      => array(
 				'title' => array(
 					'label'    => esc_html__( 'Title', 'et_builder' ),
 					'css'      => array(
@@ -122,7 +65,7 @@ class ET_Builder_Module_Fullwidth_Header extends ET_Builder_Module {
 					),
 				),
 				'content' => array(
-					'label'    => esc_html__( 'Content', 'et_builder' ),
+					'label'    => esc_html__( 'Body', 'et_builder' ),
 					'css'      => array(
 						'main' => '%%order_class%%.et_pb_fullwidth_header .et_pb_header_content_wrapper',
 					),
@@ -149,11 +92,16 @@ class ET_Builder_Module_Fullwidth_Header extends ET_Builder_Module {
 					),
 				),
 			),
-			'button' => array(
+			'button'     => array(
 				'button_two' => array(
 					'label' => esc_html__( 'Button Two', 'et_builder' ),
 					'css'      => array(
 						'main' => "{$this->main_css_element} .et_pb_button_two.et_pb_button",
+					),
+					'box_shadow' => array(
+						'css' => array(
+							'main' => '%%order_class%% .et_pb_button_two',
+						),
 					),
 				),
 				'button_one' => array(
@@ -161,31 +109,55 @@ class ET_Builder_Module_Fullwidth_Header extends ET_Builder_Module {
 					'css'      => array(
 						'main' => "{$this->main_css_element} .et_pb_button_one.et_pb_button",
 					),
+					'box_shadow' => array(
+						'css' => array(
+							'main' => '%%order_class%% .et_pb_button_one',
+						),
+					),
 				),
 			),
 			'background' => array(
-				'css'                           => array(
+				'css'     => array(
 					'main' => '.et_pb_fullwidth_header%%order_class%%',
 				),
+				'options' => array(
+					'background_color' => array(
+						'default'          => et_builder_accent_color(),
+					),
+					'parallax_method' => array(
+						'default' => 'off',
+					),
+				),
 			),
-			'custom_margin_padding' => array(),
-			'max_width' => array(
+			'max_width'  => array(
 				'css' => array(
 					'important' => 'all',
 				),
 			),
-			'text' => array(
+			'text'       => array(
 				'use_text_orientation' => false,
+				'use_background_layout' => true,
 				'css' => array(
+					'main' => implode(', ', array(
+						'%%order_class%% .et_pb_module_header',
+						'%%order_class%% .et_pb_fullwidth_header_subhead',
+						'%%order_class%% p',
+						'%%order_class%% .et_pb_button',
+
+					)),
 					'text_shadow' => '%%order_class%% .header-content',
 				),
+				'options' => array(
+					'background_layout' => array(
+						'default' => 'dark',
+						'hover' => 'tabs',
+					),
+				),
 			),
-			'filters' => array(
+			'filters'    => array(
 				'css' => array(
 					'main' => array(
 						'%%order_class%%',
-						'%%order_class%% .et_pb_fullwidth_header_container',
-						'%%order_class%% .header-content-container',
 					),
 				),
 				'child_filters_target' => array(
@@ -193,18 +165,17 @@ class ET_Builder_Module_Fullwidth_Header extends ET_Builder_Module {
 					'toggle_slug' => 'image',
 				),
 			),
-			'image' => array(
+			'image'      => array(
 				'css' => array(
 					'main' => array(
-						'%%order_class%% img',
+						'%%order_class%% .header-logo',
 						'%%order_class%% .header-image-container',
-						'%%order_class%% .header-image',
 					),
 				),
 			),
 		);
 
-		$this->custom_css_options = array(
+		$this->custom_css_fields = array(
 			'header_container' => array(
 				'label'    => esc_html__( 'Header Container', 'et_builder' ),
 				'selector' => '.et_pb_fullwidth_header_container',
@@ -219,7 +190,11 @@ class ET_Builder_Module_Fullwidth_Header extends ET_Builder_Module {
 			),
 			'title' => array(
 				'label'    => esc_html__( 'Title', 'et_builder' ),
-				'selector' => '.header-content h1,.header-content .et_pb_module_header',
+				'selector' => '%%order_class%% .header-content h1,%%order_class%% .header-content .et_pb_module_header',
+			),
+			'content' => array(
+				'label'    => esc_html__( 'Content', 'et_builder' ),
+				'selector' => '%%order_class%%.et_pb_fullwidth_header .et_pb_header_content_wrapper',
 			),
 			'subtitle' => array(
 				'label'    => esc_html__( 'Subtitle', 'et_builder' ),
@@ -238,6 +213,13 @@ class ET_Builder_Module_Fullwidth_Header extends ET_Builder_Module {
 				'selector' => '.et_pb_fullwidth_header_scroll a .et-pb-icon',
 			),
 		);
+
+		$this->help_videos = array(
+			array(
+				'id'   => esc_html( 'llLBZCNCEGk' ),
+				'name' => esc_html__( 'An introduction to the Fullwidth Header module', 'et_builder' ),
+			),
+		);
 	}
 
 	function get_fields() {
@@ -248,6 +230,7 @@ class ET_Builder_Module_Fullwidth_Header extends ET_Builder_Module {
 				'option_category' => 'basic_option',
 				'description'     => esc_html__( 'Enter your page title here.', 'et_builder' ),
 				'toggle_slug'     => 'main_content',
+				'dynamic_content' => 'text',
 			),
 			'subhead' => array(
 				'label'           => esc_html__( 'Subheading Text', 'et_builder' ),
@@ -255,27 +238,17 @@ class ET_Builder_Module_Fullwidth_Header extends ET_Builder_Module {
 				'option_category' => 'basic_option',
 				'description'     => esc_html__( 'If you would like to use a subhead, add it here. Your subhead will appear below your title in a small font.', 'et_builder' ),
 				'toggle_slug'     => 'main_content',
-			),
-			'background_layout' => array(
-				'label'           => esc_html__( 'Text Color', 'et_builder' ),
-				'type'            => 'select',
-				'option_category' => 'color_option',
-				'options'         => array(
-					'light' => esc_html__( 'Dark', 'et_builder' ),
-					'dark'  => esc_html__( 'Light', 'et_builder' ),
-				),
-				'tab_slug'        => 'advanced',
-				'toggle_slug'     => 'text',
-				'description'     => esc_html__( 'Here you can choose the value of your text. If you are working with a dark background, then your text should be set to light. If you are working with a light background, then your text should be dark.', 'et_builder' ),
+				'dynamic_content' => 'text',
 			),
 			'text_orientation' => array(
 				'label'             => esc_html__( 'Text & Logo Orientation', 'et_builder' ),
-				'type'              => 'select',
+				'type'              => 'text_align',
 				'option_category'   => 'layout',
-				'options'           => et_builder_get_text_orientation_options(),
+				'options'           => et_builder_get_text_orientation_options( array( 'justified' ) ),
 				'tab_slug'          => 'advanced',
 				'toggle_slug'       => 'layout',
 				'description'       => esc_html__( 'This controls how your text is aligned within the module.', 'et_builder' ),
+				'default_on_front'  => 'left',
 			),
 
 			'header_fullscreen' => array(
@@ -286,6 +259,7 @@ class ET_Builder_Module_Fullwidth_Header extends ET_Builder_Module {
 					'off' => esc_html__( 'No', 'et_builder' ),
 					'on'  => esc_html__( 'Yes', 'et_builder' ),
 				),
+				'default_on_front' => 'off',
 				'affects'           => array(
 					'content_orientation',
 				),
@@ -301,6 +275,7 @@ class ET_Builder_Module_Fullwidth_Header extends ET_Builder_Module {
 					'off' => esc_html__( 'No', 'et_builder' ),
 					'on'  => esc_html__( 'Yes', 'et_builder' ),
 				),
+				'default_on_front' => 'off',
 				'affects'           => array(
 					'scroll_down_icon',
 				),
@@ -309,12 +284,14 @@ class ET_Builder_Module_Fullwidth_Header extends ET_Builder_Module {
 				'description'       => esc_html__( 'Here you can choose whether the scroll down button is shown.', 'et_builder' ),
 			),
 			'scroll_down_icon' => array(
+				'default'             => ';',
 				'label'               => esc_html__( 'Icon', 'et_builder' ),
-				'type'                => 'text',
+				'type'                => 'select_icon',
 				'option_category'     => 'configuration',
 				'class'               => array( 'et-pb-font-icon' ),
-				'renderer'            => 'et_pb_get_font_down_icon_list',
-				'renderer_with_field' => true,
+				'renderer_options'    => array(
+					'icons_list' => 'icon_down',
+				),
 				'description'         => esc_html__( 'Choose an icon to display for the scroll down button.', 'et_builder' ),
 				'depends_show_if'     => 'on',
 				'tab_slug'            => 'advanced',
@@ -326,6 +303,7 @@ class ET_Builder_Module_Fullwidth_Header extends ET_Builder_Module {
 				'custom_color'      => true,
 				'tab_slug'          => 'advanced',
 				'toggle_slug'       => 'scroll_down',
+				'hover'             => 'tabs',
 			),
 			'scroll_down_icon_size' => array(
 				'label'           => esc_html__( 'Scroll Down Icon Size', 'et_builder' ),
@@ -334,55 +312,48 @@ class ET_Builder_Module_Fullwidth_Header extends ET_Builder_Module {
 				'mobile_options'  => true,
 				'tab_slug'        => 'advanced',
 				'toggle_slug'     => 'scroll_down',
-			),
-			'scroll_down_icon_size_tablet' => array(
-				'type'        => 'skip',
-				'tab_slug'    => 'advanced',
-				'toggle_slug' => 'scroll_down',
-			),
-			'scroll_down_icon_size_phone' => array(
-				'type'        => 'skip',
-				'tab_slug'    => 'advanced',
-				'toggle_slug' => 'scroll_down',
-			),
-			'scroll_down_icon_size_last_edited' => array(
-				'type'        => 'skip',
-				'tab_slug'    => 'advanced',
-				'toggle_slug' => 'scroll_down',
+				'responsive'      => true,
+				'default_unit'    => 'px',
+				'hover'           => 'tabs',
 			),
 			'button_one_text' => array(
-				'label'           => sprintf( esc_html__( 'Button %1$s Text', 'et_builder' ), '#1' ),
+				'label'           => sprintf( esc_html__( 'Button %1$s Link Text', 'et_builder' ), '#1' ),
 				'type'            => 'text',
 				'option_category' => 'basic_option',
 				'description'     => esc_html__( 'Enter the text for the Button.', 'et_builder' ),
 				'toggle_slug'     => 'main_content',
+				'dynamic_content' => 'text',
 			),
 			'button_one_url' => array(
-				'label'           => sprintf( esc_html__( 'Button %1$s URL', 'et_builder' ), '#1' ),
+				'label'           => sprintf( esc_html__( 'Button %1$s Link URL', 'et_builder' ), '#1' ),
 				'type'            => 'text',
 				'option_category' => 'basic_option',
 				'description'     => esc_html__( 'Enter the URL for the Button.', 'et_builder' ),
-				'toggle_slug'     => 'links',
+				'toggle_slug'     => 'link_options',
+				'dynamic_content' => 'url',
 			),
 			'button_two_text' => array(
-				'label'           => sprintf( esc_html__( 'Button %1$s Text', 'et_builder' ), '#2' ),
+				'label'           => sprintf( esc_html__( 'Button %1$s Link Text', 'et_builder' ), '#2' ),
 				'type'            => 'text',
 				'option_category' => 'basic_option',
 				'description'     => esc_html__( 'Enter the text for the Button.', 'et_builder' ),
 				'toggle_slug'     => 'main_content',
+				'dynamic_content' => 'text',
 			),
 			'button_two_url' => array(
-				'label'           => sprintf( esc_html__( 'Button %1$s URL', 'et_builder' ), '#2' ),
+				'label'           => sprintf( esc_html__( 'Button %1$s Link URL', 'et_builder' ), '#2' ),
 				'type'            => 'text',
 				'option_category' => 'basic_option',
 				'description'     => esc_html__( 'Enter the URL for the Button.', 'et_builder' ),
-				'toggle_slug'     => 'links',
+				'toggle_slug'     => 'link_options',
+				'dynamic_content' => 'url',
 			),
 			'background_overlay_color' => array(
 				'label'             => esc_html__( 'Background Overlay Color', 'et_builder' ),
 				'type'              => 'color-alpha',
 				'tab_slug'          => 'advanced',
 				'toggle_slug'       => 'overlay',
+				'hover'             => 'tabs',
 			),
 			'logo_image_url' => array(
 				'label'              => esc_html__( 'Logo Image URL', 'et_builder' ),
@@ -397,30 +368,33 @@ class ET_Builder_Module_Fullwidth_Header extends ET_Builder_Module {
 				),
 				'description'        => esc_html__( 'Upload your desired image, or type in the URL to the image you would like to display.', 'et_builder' ),
 				'toggle_slug'        => 'images',
+				'dynamic_content'    => 'image',
 			),
 			'logo_alt_text' => array(
 				'label'           => esc_html__( 'Logo Image Alternative Text', 'et_builder' ),
 				'type'            => 'text',
 				'option_category' => 'basic_option',
-				'depends_default' => true,
-				'depends_to'      => array(
+				'depends_show_if' => 'on',
+				'depends_on'      => array(
 					'logo_image_url',
 				),
 				'description'     => esc_html__( 'This defines the HTML ALT text. A short description of your image can be placed here.', 'et_builder' ),
 				'tab_slug'        => 'custom_css',
 				'toggle_slug'     => 'attributes',
+				'dynamic_content' => 'text',
 			),
 			'logo_title' => array(
-				'label'           => esc_html__( 'Logo Title', 'et_builder' ),
+				'label'           => esc_html__( 'Logo Image Title', 'et_builder' ),
 				'type'            => 'text',
 				'option_category' => 'basic_option',
-				'depends_default' => true,
-				'depends_to'      => array(
+				'depends_show_if' => 'on',
+				'depends_on'      => array(
 					'logo_image_url',
 				),
 				'description'     => esc_html__( 'This defines the HTML Title text.', 'et_builder' ),
 				'tab_slug'        => 'custom_css',
 				'toggle_slug'     => 'attributes',
+				'dynamic_content' => 'text',
 			),
 			'content_orientation' => array(
 				'label'           => esc_html__( 'Text Vertical Alignment', 'et_builder' ),
@@ -430,6 +404,7 @@ class ET_Builder_Module_Fullwidth_Header extends ET_Builder_Module {
 					'center'  => esc_html__( 'Center', 'et_builder' ),
 					'bottom' => esc_html__( 'Bottom', 'et_builder' ),
 				),
+				'default_on_front' => 'center',
 				'tab_slug'        => 'advanced',
 				'toggle_slug'     => 'text',
 				'description'     => esc_html__( 'This setting determines the vertical alignment of your content. Your content can either be vertically centered, or aligned to the bottom.', 'et_builder' ),
@@ -445,6 +420,37 @@ class ET_Builder_Module_Fullwidth_Header extends ET_Builder_Module {
 				'update_text'        => esc_attr__( 'Set As Image', 'et_builder' ),
 				'description'        => esc_html__( 'Upload your desired image, or type in the URL to the image you would like to display.', 'et_builder' ),
 				'toggle_slug'        => 'images',
+				'affects'            => array(
+					'image_alt_text',
+					'image_title',
+				),
+				'dynamic_content'    => 'image',
+			),
+			'image_alt_text' => array(
+				'label'           => esc_html__( 'Header Image Alternative Text', 'et_builder' ),
+				'type'            => 'text',
+				'option_category' => 'basic_option',
+				'depends_show_if' => 'on',
+				'depends_on'      => array(
+					'header_image_url',
+				),
+				'description'     => esc_html__( 'This defines the HTML ALT text. A short description of your image can be placed here.', 'et_builder' ),
+				'tab_slug'        => 'custom_css',
+				'toggle_slug'     => 'attributes',
+				'dynamic_content' => 'text',
+			),
+			'image_title' => array(
+				'label'           => esc_html__( 'Header Image Title', 'et_builder' ),
+				'type'            => 'text',
+				'option_category' => 'basic_option',
+				'depends_show_if' => 'on',
+				'depends_on'      => array(
+					'header_image_url',
+				),
+				'description'     => esc_html__( 'This defines the HTML Title text.', 'et_builder' ),
+				'tab_slug'        => 'custom_css',
+				'toggle_slug'     => 'attributes',
+				'dynamic_content' => 'text',
 			),
 			'image_orientation' => array(
 				'label'           => esc_html__( 'Image Vertical Alignment', 'et_builder' ),
@@ -454,16 +460,18 @@ class ET_Builder_Module_Fullwidth_Header extends ET_Builder_Module {
 					'center'  => esc_html__( 'Vertically Centered', 'et_builder' ),
 					'bottom' => esc_html__( 'Bottom', 'et_builder' ),
 				),
+				'default_on_front' => 'center',
 				'tab_slug'        => 'advanced',
 				'toggle_slug'     => 'image',
 				'description'     => esc_html__( 'This controls the orientation of the image within the module.', 'et_builder' ),
 			),
-			'content_new' => array(
+			'content' => array(
 				'label'           => esc_html__( 'Content', 'et_builder' ),
 				'type'            => 'tiny_mce',
 				'option_category' => 'basic_option',
 				'description'     => esc_html__( 'Content entered here will appear below the subheading text.', 'et_builder' ),
 				'toggle_slug'     => 'main_content',
+				'dynamic_content' => 'text',
 			),
 			'content_max_width' => array(
 				'label'           => esc_html__( 'Content Width', 'et_builder' ),
@@ -473,14 +481,16 @@ class ET_Builder_Module_Fullwidth_Header extends ET_Builder_Module {
 				'toggle_slug'     => 'width',
 				'mobile_options'  => true,
 				'validate_unit'   => true,
-				'depends_show_if' => 'off',
 				'default'         => '100%',
+				'default_unit'    => '%',
+				'default_on_front' => '',
 				'allow_empty'     => true,
 				'range_settings'  => array(
 					'min'  => '0',
 					'max'  => '100',
 					'step' => '1',
 				),
+				'responsive'      => true,
 			),
 			'title_font_color' => array(
 				'type' => 'hidden',
@@ -491,115 +501,85 @@ class ET_Builder_Module_Fullwidth_Header extends ET_Builder_Module {
 			'content_font_color' => array(
 				'type' => 'hidden',
 			),
-			'content_max_width_tablet' => array(
-				'type'        => 'skip',
-				'tab_slug'    => 'advanced',
-				'toggle_slug' => 'width',
-			),
-			'content_max_width_phone' => array(
-				'type'        => 'skip',
-				'tab_slug'    => 'advanced',
-				'toggle_slug' => 'width',
-			),
-			'content_max_width_last_edited' => array(
-				'type'        => 'skip',
-				'tab_slug'    => 'advanced',
-				'toggle_slug' => 'width',
-			),
-			'disabled_on' => array(
-				'label'           => esc_html__( 'Disable on', 'et_builder' ),
-				'type'            => 'multiple_checkboxes',
-				'options'         => array(
-					'phone'   => esc_html__( 'Phone', 'et_builder' ),
-					'tablet'  => esc_html__( 'Tablet', 'et_builder' ),
-					'desktop' => esc_html__( 'Desktop', 'et_builder' ),
-				),
-				'additional_att'  => 'disable_on',
-				'option_category' => 'configuration',
-				'description'     => esc_html__( 'This will disable the module on selected devices', 'et_builder' ),
-				'tab_slug'        => 'custom_css',
-				'toggle_slug'     => 'visibility',
-			),
-			'admin_label' => array(
-				'label'       => esc_html__( 'Admin Label', 'et_builder' ),
-				'type'        => 'text',
-				'description' => esc_html__( 'This will change the label of the module in the builder for easy identification.', 'et_builder' ),
-				'toggle_slug' => 'admin_label',
-			),
-			'module_id' => array(
-				'label'           => esc_html__( 'CSS ID', 'et_builder' ),
-				'type'            => 'text',
-				'option_category' => 'configuration',
-				'tab_slug'        => 'custom_css',
-				'toggle_slug'     => 'classes',
-				'option_class'    => 'et_pb_custom_css_regular',
-			),
-			'module_class' => array(
-				'label'           => esc_html__( 'CSS Class', 'et_builder' ),
-				'type'            => 'text',
-				'option_category' => 'configuration',
-				'tab_slug'        => 'custom_css',
-				'toggle_slug'     => 'classes',
-				'option_class'    => 'et_pb_custom_css_regular',
-			),
 		);
 
 		return $fields;
 	}
 
-	function shortcode_callback( $atts, $content = null, $function_name ) {
-		$module_id                    = $this->shortcode_atts['module_id'];
-		$module_class                 = $this->shortcode_atts['module_class'];
-		$title                        = $this->shortcode_atts['title'];
-		$subhead                      = $this->shortcode_atts['subhead'];
-		$background_layout            = $this->shortcode_atts['background_layout'];
-		$text_orientation             = $this->shortcode_atts['text_orientation'];
-		$button_one_text              = $this->shortcode_atts['button_one_text'];
-		$button_one_url               = $this->shortcode_atts['button_one_url'];
-		$button_one_rel               = $this->shortcode_atts['button_one_rel'];
-		$button_two_text              = $this->shortcode_atts['button_two_text'];
-		$button_two_url               = $this->shortcode_atts['button_two_url'];
-		$button_two_rel               = $this->shortcode_atts['button_two_rel'];
-		$header_fullscreen            = $this->shortcode_atts['header_fullscreen'];
-		$header_scroll_down           = $this->shortcode_atts['header_scroll_down'];
-		$scroll_down_icon             = $this->shortcode_atts['scroll_down_icon'];
-		$scroll_down_icon_color       = $this->shortcode_atts['scroll_down_icon_color'];
-		$scroll_down_icon_size        = $this->shortcode_atts['scroll_down_icon_size'];
-		$scroll_down_icon_size_tablet = $this->shortcode_atts['scroll_down_icon_size_tablet'];
-		$scroll_down_icon_size_phone  = $this->shortcode_atts['scroll_down_icon_size_phone'];
-		$scroll_down_icon_size_last_edited = $this->shortcode_atts['scroll_down_icon_size_last_edited'];
-		$background_image             = $this->shortcode_atts['background_image'];
-		$background_overlay_color     = $this->shortcode_atts['background_overlay_color'];
-		$parallax                     = $this->shortcode_atts['parallax'];
-		$parallax_method              = $this->shortcode_atts['parallax_method'];
-		$logo_image_url               = $this->shortcode_atts['logo_image_url'];
-		$header_image_url             = $this->shortcode_atts['header_image_url'];
-		$content_orientation          = $this->shortcode_atts['content_orientation'];
-		$image_orientation            = $this->shortcode_atts['image_orientation'];
-		$custom_icon_1                = $this->shortcode_atts['button_one_icon'];
-		$button_custom_1              = $this->shortcode_atts['custom_button_one'];
-		$custom_icon_2                = $this->shortcode_atts['button_two_icon'];
-		$button_custom_2              = $this->shortcode_atts['custom_button_two'];
-		$logo_title                   = $this->shortcode_atts['logo_title'];
-		$logo_alt_text                = $this->shortcode_atts['logo_alt_text'];
-		$header_level                 = $this->shortcode_atts['title_level'];
-		$content_max_width             = $this->shortcode_atts['content_max_width'];
-		$content_max_width_tablet      = $this->shortcode_atts['content_max_width_tablet'];
-		$content_max_width_phone       = $this->shortcode_atts['content_max_width_phone'];
-		$content_max_width_last_edited = $this->shortcode_atts['content_max_width_last_edited'];
+	public function get_transition_fields_css_props() {
+		$fields = parent::get_transition_fields_css_props();
 
-		if ( is_rtl() && 'left' === $text_orientation ) {
-			$text_orientation = 'right';
-		}
+		$fields['scroll_down_icon_color'] = array( 'color' => '%%order_class%%.et_pb_fullwidth_header .et_pb_fullwidth_header_scroll a .et-pb-icon' );
+		$fields['scroll_down_icon_size'] = array( 'font-size' => '%%order_class%%.et_pb_fullwidth_header .et_pb_fullwidth_header_scroll a .et-pb-icon' );
+		$fields['background_overlay_color'] = array( 'background-color' => '%%order_class%%.et_pb_fullwidth_header .et_pb_fullwidth_header_overlay' );
 
-		$module_class = ET_Builder_Element::add_module_order_class( $module_class, $function_name );
+		return $fields;
+	}
+
+	function render( $attrs, $content = null, $render_slug ) {
+		// Allowing full html for backwards compatibility.
+		$title                             = $this->_esc_attr( 'title', 'full' );
+		// Allowing full html for backwards compatibility.
+		$subhead                           = $this->_esc_attr( 'subhead', 'full' );
+		$background_layout                 = $this->props['background_layout'];
+		$background_layout_hover           = et_pb_hover_options()->get_value( 'background_layout', $this->props, 'light' );
+		$background_layout_hover_enabled   = et_pb_hover_options()->is_enabled( 'background_layout', $this->props );
+		$text_orientation                  = $this->get_text_orientation();
+		$button_one_text                   = $this->_esc_attr( 'button_one_text', 'limited' );
+		$button_one_url                    = $this->props['button_one_url'];
+		$button_one_rel                    = $this->props['button_one_rel'];
+		$button_two_text                   = $this->_esc_attr( 'button_two_text', 'limited' );
+		$button_two_url                    = $this->props['button_two_url'];
+		$button_two_rel                    = $this->props['button_two_rel'];
+		$header_fullscreen                 = $this->props['header_fullscreen'];
+		$header_scroll_down                = $this->props['header_scroll_down'];
+		$scroll_down_icon                  = $this->props['scroll_down_icon'];
+		$scroll_down_icon_color            = $this->props['scroll_down_icon_color'];
+		$scroll_down_icon_color_hover      = $this->get_hover_value( 'scroll_down_icon_color' );
+		$scroll_down_icon_size             = $this->props['scroll_down_icon_size'];
+		$scroll_down_icon_size_hover       = $this->get_hover_value( 'scroll_down_icon_size' );
+		$scroll_down_icon_size_tablet      = $this->props['scroll_down_icon_size_tablet'];
+		$scroll_down_icon_size_phone       = $this->props['scroll_down_icon_size_phone'];
+		$scroll_down_icon_size_last_edited = $this->props['scroll_down_icon_size_last_edited'];
+		$background_image                  = $this->props['background_image'];
+		$background_overlay_color          = $this->props['background_overlay_color'];
+		$background_overlay_color_hover    = $this->get_hover_value( 'background_overlay_color' );
+		$parallax                          = $this->props['parallax'];
+		$parallax_method                   = $this->props['parallax_method'];
+		$logo_image_url                    = $this->props['logo_image_url'];
+		$header_image_url                  = $this->props['header_image_url'];
+		$content_orientation               = $this->props['content_orientation'];
+		$image_orientation                 = $this->props['image_orientation'];
+		$custom_icon_1                     = $this->props['button_one_icon'];
+		$button_custom_1                   = $this->props['custom_button_one'];
+		$custom_icon_2                     = $this->props['button_two_icon'];
+		$button_custom_2                   = $this->props['custom_button_two'];
+		$logo_title                        = $this->_esc_attr( 'logo_title' );
+		$logo_alt_text                     = $this->_esc_attr( 'logo_alt_text' );
+		$image_alt_text                    = $this->_esc_attr( 'image_alt_text' );
+		$image_title                       = $this->_esc_attr( 'image_title' );
+		$header_level                      = $this->props['title_level'];
+		$content_max_width                 = $this->props['content_max_width'];
+		$content_max_width_tablet          = $this->props['content_max_width_tablet'];
+		$content_max_width_phone           = $this->props['content_max_width_phone'];
+		$content_max_width_last_edited     = $this->props['content_max_width_last_edited'];
 
 		if ( '' !== $scroll_down_icon_color ) {
-			ET_Builder_Element::set_style( $function_name, array(
+			ET_Builder_Element::set_style( $render_slug, array(
 				'selector'    => '%%order_class%%.et_pb_fullwidth_header .et_pb_fullwidth_header_scroll a .et-pb-icon',
 				'declaration' => sprintf(
 					'color: %1$s;',
 					esc_html( $scroll_down_icon_color )
+				),
+			) );
+		}
+
+		if ( et_builder_is_hover_enabled( 'scroll_down_icon_color', $this->props ) ) {
+			ET_Builder_Element::set_style( $render_slug, array(
+				'selector'    => '%%order_class%%.et_pb_fullwidth_header .et_pb_fullwidth_header_scroll a:hover .et-pb-icon',
+				'declaration' => sprintf(
+					'color: %1$s;',
+					esc_html( $scroll_down_icon_color_hover )
 				),
 			) );
 		}
@@ -613,7 +593,17 @@ class ET_Builder_Module_Fullwidth_Header extends ET_Builder_Module {
 				'phone'   => $icon_size_responsive_active ? $scroll_down_icon_size_phone : '',
 			);
 
-			et_pb_generate_responsive_css( $icon_size_values, '%%order_class%%.et_pb_fullwidth_header .et_pb_fullwidth_header_scroll a .et-pb-icon', 'font-size', $function_name );
+			et_pb_generate_responsive_css( $icon_size_values, '%%order_class%%.et_pb_fullwidth_header .et_pb_fullwidth_header_scroll a .et-pb-icon', 'font-size', $render_slug );
+		}
+
+		if ( et_builder_is_hover_enabled( 'scroll_down_icon_size', $this->props ) ) {
+			ET_Builder_Element::set_style( $render_slug, array(
+				'selector'    => '%%order_class%%.et_pb_fullwidth_header .et_pb_fullwidth_header_scroll a:hover .et-pb-icon',
+				'declaration' => sprintf(
+					'font-size: %1$s;',
+					esc_html( $scroll_down_icon_size_hover )
+				),
+			) );
 		}
 
 		if ( '' !== $content_max_width_tablet || '' !== $content_max_width_phone || '' !== $content_max_width ) {
@@ -625,11 +615,11 @@ class ET_Builder_Module_Fullwidth_Header extends ET_Builder_Module {
 				'phone'   => $content_max_width_responsive_active ? $content_max_width_phone : '',
 			);
 
-			et_pb_generate_responsive_css( $content_max_width_values, '%%order_class%%.et_pb_fullwidth_header .et_pb_fullwidth_header_container .header-content', 'max-width', $function_name );
+			et_pb_generate_responsive_css( $content_max_width_values, '%%order_class%%.et_pb_fullwidth_header .et_pb_fullwidth_header_container .header-content', 'max-width', $render_slug );
 		}
 
 		if ( '' !== $background_overlay_color ) {
-			ET_Builder_Element::set_style( $function_name, array(
+			ET_Builder_Element::set_style( $render_slug, array(
 				'selector'    => '%%order_class%%.et_pb_fullwidth_header .et_pb_fullwidth_header_overlay',
 				'declaration' => sprintf(
 					'background-color: %1$s;',
@@ -638,38 +628,51 @@ class ET_Builder_Module_Fullwidth_Header extends ET_Builder_Module {
 			) );
 		}
 
-		$button_output = '';
-		if ( '' !== $button_one_text ) {
-			$button_output .= sprintf(
-				'<a href="%2$s" class="et_pb_more_button et_pb_button et_pb_button_one%4$s"%3$s%5$s>%1$s</a>',
-				( '' !== $button_one_text ? esc_attr( $button_one_text ) : '' ),
-				( '' !== $button_one_url ? esc_url( $button_one_url ) : '#' ),
-				'' !== $custom_icon_1 && 'on' === $button_custom_1 ? sprintf(
-					' data-icon="%1$s"',
-					esc_attr( et_pb_process_font_icon( $custom_icon_1 ) )
-				) : '',
-				'' !== $custom_icon_1 && 'on' === $button_custom_1 ? ' et_pb_custom_button_icon' : '',
-				$this->get_rel_attributes( $button_one_rel )
-			);
+		if ( et_builder_is_hover_enabled( 'background_overlay_color', $this->props ) ) {
+			ET_Builder_Element::set_style( $render_slug, array(
+				'selector'    => $this->add_hover_to_order_class( '%%order_class%%.et_pb_fullwidth_header .et_pb_fullwidth_header_overlay' ),
+				'declaration' => sprintf(
+					'background-color: %1$s;',
+					esc_html( $background_overlay_color_hover )
+				),
+			) );
 		}
 
-		if ( '' !== $button_two_text ) {
-			$button_output .= sprintf(
-				'<a href="%2$s" class="et_pb_more_button et_pb_button et_pb_button_two%4$s"%3$s%5$s>%1$s</a>',
-				( '' !== $button_two_text ? esc_attr( $button_two_text ) : '' ),
-				( '' !== $button_two_url ? esc_url( $button_two_url ) : '#' ),
-				'' !== $custom_icon_2 && 'on' === $button_custom_2 ? sprintf(
-					' data-icon="%1$s"',
-					esc_attr( et_pb_process_font_icon( $custom_icon_2 ) )
-				) : '',
-				'' !== $custom_icon_2 && 'on' === $button_custom_2 ? ' et_pb_custom_button_icon' : '',
-				$this->get_rel_attributes( $button_two_rel )
-			);
-		}
+		$button_output = '';
+
+		$button_output .= $this->render_button( array(
+			'button_classname'    => array( 'et_pb_more_button', 'et_pb_button_one' ),
+			'button_custom'       => $button_custom_1,
+			'button_rel'          => $button_one_rel,
+			'button_text'         => $button_one_text,
+			'button_text_escaped' => true,
+			'button_url'          => $button_one_url,
+			'custom_icon'         => $custom_icon_1,
+			'has_wrapper'         => false,
+		) );
+
+		$button_output .= $this->render_button( array(
+			'button_classname'    => array( 'et_pb_more_button', 'et_pb_button_two' ),
+			'button_custom'       => $button_custom_2,
+			'button_rel'          => $button_two_rel,
+			'button_text'         => $button_two_text,
+			'button_text_escaped' => true,
+			'button_url'          => $button_two_url,
+			'custom_icon'         => $custom_icon_2,
+			'has_wrapper'         => false,
+		) );
 
 		$video_background = $this->video_background();
+		$parallax_image_background = $this->get_parallax_image_background();
 
-		$class = " et_pb_module et_pb_bg_layout_{$background_layout} et_pb_text_align_{$text_orientation}";
+		// Images: Add CSS Filters and Mix Blend Mode rules (if set)
+		if ( array_key_exists( 'image', $this->advanced_fields ) && array_key_exists( 'css', $this->advanced_fields['image'] ) ) {
+			$this->add_classname($this->generate_css_filters(
+				$render_slug,
+				'child_',
+				self::$data_utils->array_get( $this->advanced_fields['image']['css'], 'main', '%%order_class%%' )
+			));
+		}
 
 		$header_content = '';
 		if ( '' !== $title || '' !== $subhead || '' !== $content || '' !== $button_output || '' !== $logo_image_url ) {
@@ -692,37 +695,31 @@ class ET_Builder_Module_Fullwidth_Header extends ET_Builder_Module {
 						%5$s
 					</div>
 				</div>',
-				( $title ? sprintf( '<%1$s class="et_pb_module_header">%2$s</%1$s>', et_pb_process_header_level( $header_level, 'h1' ), $title ) : '' ),
-				( $subhead ? sprintf( '<span class="et_pb_fullwidth_header_subhead">%1$s</span>', $subhead ) : '' ),
+				( $title ? sprintf( '<%1$s class="et_pb_module_header">%2$s</%1$s>', et_pb_process_header_level( $header_level, 'h1' ), et_core_esc_previously( $title ) ) : '' ),
+				( $subhead ? sprintf( '<span class="et_pb_fullwidth_header_subhead">%1$s</span>', et_core_esc_previously( $subhead ) ) : '' ),
 				$logo_image,
-				sprintf( '<div class="et_pb_header_content_wrapper">%1$s</div>', $this->shortcode_content ),
+				sprintf( '<div class="et_pb_header_content_wrapper">%1$s</div>', $this->content ),
 				( '' !== $button_output ? $button_output : '' ),
-				( '' !== $content_orientation ? sprintf( ' %1$s', $content_orientation ) : '' )
+				( '' !== $content_orientation ? sprintf( ' %1$s', esc_attr( $content_orientation ) ) : '' )
 			);
 		}
 
 		$header_image = '';
+
 		if ( '' !== $header_image_url ) {
-			// Images: Add CSS Filters and Mix Blend Mode rules (if set)
-			if ( array_key_exists( 'image', $this->advanced_options ) && array_key_exists( 'css', $this->advanced_options['image'] ) ) {
-				$generate_css_image_filters = $this->generate_css_filters(
-					$function_name,
-					'child_',
-					self::$data_utils->array_get( $this->advanced_options['image']['css'], 'main', '%%order_class%%' )
-				);
-			}
 			$header_image = sprintf(
-				'<div class="header-image-container%2$s%3$s">
+				'<div class="header-image-container%2$s">
 					<div class="header-image">
-						<img src="%1$s" />
+						<img src="%1$s" alt="%3$s" title="%4$s" />
 					</div>
 				</div>',
 				( '' !== $header_image_url ? esc_url( $header_image_url ) : '' ),
-				( '' !== $image_orientation ? sprintf( ' %1$s', $image_orientation ) : '' ),
-				$generate_css_image_filters
+				( '' !== $image_orientation ? sprintf( ' %1$s', esc_attr( $image_orientation ) ) : '' ),
+				esc_attr( $image_alt_text ),
+				esc_attr( $image_title )
 			);
 
-			$module_class .= ' et_pb_header_with_image';
+			$this->add_classname( 'et_pb_header_with_image' );
 
 		}
 
@@ -734,10 +731,33 @@ class ET_Builder_Module_Fullwidth_Header extends ET_Builder_Module {
 			);
 		}
 
+		$data_background_layout       = '';
+		$data_background_layout_hover = '';
+		if ( $background_layout_hover_enabled ) {
+			$data_background_layout = sprintf(
+				' data-background-layout="%1$s"',
+				esc_attr( $background_layout )
+			);
+			$data_background_layout_hover = sprintf(
+				' data-background-layout-hover="%1$s"',
+				esc_attr( $background_layout_hover )
+			);
+		}
+
+		// Module classnames
+		$this->add_classname( array(
+			"et_pb_bg_layout_{$background_layout}",
+			"et_pb_text_align_{$text_orientation}",
+		) );
+
+		if ( 'off' !== $header_fullscreen ) {
+			$this->add_classname( 'et_pb_fullscreen' );
+		}
+
 		$output = sprintf(
-			'<section%9$s class="et_pb_fullwidth_header%1$s%7$s%8$s%10$s%11$s">
+			'<section%7$s class="%1$s"%9$s%10$s>
 				%6$s
-				%12$s
+				%8$s
 				<div class="et_pb_fullwidth_header_container%5$s">
 					%2$s
 					%3$s
@@ -745,50 +765,19 @@ class ET_Builder_Module_Fullwidth_Header extends ET_Builder_Module {
 				<div class="et_pb_fullwidth_header_overlay"></div>
 				<div class="et_pb_fullwidth_header_scroll">%4$s</div>
 			</section>',
-			( 'off' !== $header_fullscreen ? ' et_pb_fullscreen' : '' ),
+			$this->module_classname( $render_slug ),
 			( '' !== $header_content ? $header_content : '' ),
 			( '' !== $header_image ? $header_image : '' ),
 			( 'off' !== $header_scroll_down ? $scroll_down_output : '' ),
-			( '' !== $text_orientation ? sprintf( ' %1$s', esc_attr( $text_orientation ) ) : '' ),
-			( '' !== $background_image && 'on' === $parallax
-				? sprintf(
-					'<div class="et_parallax_bg%2$s" style="background-image: url(%1$s);"></div>',
-					esc_attr( $background_image ),
-					( 'off' === $parallax_method ? ' et_pb_parallax_css' : '' )
-				)
-				: ''
-			),
-			( '' !== $background_image && 'on' === $parallax ? ' et_pb_section_parallax' : '' ),
-			esc_attr( $class ),
-			( '' !== $module_id ? sprintf( ' id="%1$s"', esc_attr( $module_id ) ) : '' ),
-			( '' !== $module_class ? sprintf( ' %1$s', esc_attr( $module_class ) ) : '' ),
-			'' !== $video_background ? ' et_pb_section_video et_pb_preload' : '',
-			$video_background
+			( '' !== $text_orientation ? sprintf( ' %1$s', esc_attr( $text_orientation ) ) : '' ), // #5
+			$parallax_image_background,
+			$this->module_id(),
+			$video_background,
+			et_core_esc_previously( $data_background_layout ),
+			et_core_esc_previously( $data_background_layout_hover ) // #10
 		);
 
 		return $output;
-	}
-
-	public function process_box_shadow( $function_name ) {
-		$boxShadow = ET_Builder_Module_Fields_Factory::get( 'BoxShadow' );
-		$button_1  = sprintf( '.%1$s .et_pb_button_one', self::get_module_order_class( $function_name ) );
-		$button_2  = sprintf( '.%1$s .et_pb_button_two', self::get_module_order_class( $function_name ) );
-
-		if ( isset( $this->shortcode_atts['custom_button_one'] ) && $this->shortcode_atts['custom_button_one'] == 'on' ) {
-			self::set_style( $function_name, array(
-				'selector'    => $button_1,
-				'declaration' => $boxShadow->get_value( $this->shortcode_atts, array( 'suffix' => '_button_one' ) ),
-			) );
-		}
-
-		if ( isset( $this->shortcode_atts['custom_button_two'] ) && $this->shortcode_atts['custom_button_two'] == 'on' ) {
-			self::set_style( $function_name, array(
-				'selector'    => $button_2,
-				'declaration' => $boxShadow->get_value( $this->shortcode_atts, array( 'suffix' => '_button_two' ) ),
-			) );
-		}
-
-		parent::process_box_shadow( $function_name );
 	}
 }
 

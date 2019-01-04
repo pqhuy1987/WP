@@ -3,26 +3,17 @@
 class ET_Builder_Module_Map_Item extends ET_Builder_Module {
 	function init() {
 		$this->name                        = esc_html__( 'Pin', 'et_builder' );
+		$this->plural                      = esc_html__( 'Pins', 'et_builder' );
 		$this->slug                        = 'et_pb_map_pin';
-		$this->fb_support                  = true;
+		$this->vb_support                  = 'on';
 		$this->type                        = 'child';
 		$this->child_title_var             = 'title';
 		$this->custom_css_tab              = false;
 
-		$this->whitelisted_fields = array(
-			'title',
-			'pin_address',
-			'zoom_level',
-			'pin_address_lat',
-			'pin_address_lng',
-			'map_center_map',
-			'content_new',
-		);
-
 		$this->advanced_setting_title_text = esc_html__( 'New Pin', 'et_builder' );
 		$this->settings_text               = esc_html__( 'Pin Settings', 'et_builder' );
 
-		$this->options_toggles = array(
+		$this->settings_modal_toggles = array(
 			'general'  => array(
 				'toggles' => array(
 					'main_content' => esc_html__( 'Text', 'et_builder' ),
@@ -31,13 +22,7 @@ class ET_Builder_Module_Map_Item extends ET_Builder_Module {
 			),
 		);
 
-		$this->advanced_options = array(
-			'filters' => array(
-				'css' => array(
-					'main' => '%%order_class%%',
-				),
-			),
-		);
+		$this->advanced_fields = false;
 	}
 
 	function get_fields() {
@@ -48,6 +33,7 @@ class ET_Builder_Module_Map_Item extends ET_Builder_Module {
 				'option_category' => 'basic_option',
 				'description'     => esc_html__( 'The title will be used within the tab button for this tab.', 'et_builder' ),
 				'toggle_slug'     => 'main_content',
+				'dynamic_content' => 'text',
 			),
 			'pin_address' => array(
 				'label'             => esc_html__( 'Map Pin Address', 'et_builder' ),
@@ -62,9 +48,10 @@ class ET_Builder_Module_Map_Item extends ET_Builder_Module {
 				'toggle_slug'       => 'map',
 			),
 			'zoom_level' => array(
-				'renderer'        => 'et_builder_generate_pin_zoom_level_input',
-				'option_category' => 'basic_option',
-				'class'           => array( 'et_pb_zoom_level' ),
+				'type'    => 'hidden',
+				'class'   => array( 'et_pb_zoom_level' ),
+				'default' => '18',
+				'default_on_front' => '',
 			),
 			'pin_address_lat' => array(
 				'type'  => 'hidden',
@@ -75,28 +62,29 @@ class ET_Builder_Module_Map_Item extends ET_Builder_Module {
 				'class' => array( 'et_pb_pin_address_lng' ),
 			),
 			'map_center_map' => array(
-				'renderer'              => 'et_builder_generate_center_map_setting',
+				'type'                  => 'center_map',
 				'option_category'       => 'basic_option',
 				'use_container_wrapper' => false,
 				'toggle_slug'           => 'map',
 			),
-			'content_new' => array(
+			'content' => array(
 				'label'           => esc_html__( 'Content', 'et_builder' ),
 				'type'            => 'tiny_mce',
 				'option_category' => 'basic_option',
 				'description'     => esc_html__( 'Here you can define the content that will be placed within the infobox for the pin.', 'et_builder' ),
 				'toggle_slug'     => 'main_content',
+				'dynamic_content' => 'text',
 			),
 		);
 		return $fields;
 	}
 
-	function shortcode_callback( $atts, $content = null, $function_name ) {
+	function render( $attrs, $content = null, $render_slug ) {
 		global $et_pb_tab_titles;
 
-		$title = $this->shortcode_atts['title'];
-		$pin_address_lat = $this->shortcode_atts['pin_address_lat'];
-		$pin_address_lng = $this->shortcode_atts['pin_address_lng'];
+		$title           = $this->_esc_attr( 'title' );
+		$pin_address_lat = $this->props['pin_address_lat'];
+		$pin_address_lng = $this->props['pin_address_lng'];
 
 		$replace_htmlentities = array( '&#8221;' => '', '&#8243;' => '' );
 
@@ -107,7 +95,7 @@ class ET_Builder_Module_Map_Item extends ET_Builder_Module {
 			$pin_address_lng = strtr( $pin_address_lng, $replace_htmlentities );
 		}
 
-		$content = $this->shortcode_content;
+		$content = $this->content;
 
 		$output = sprintf(
 			'<div class="et_pb_map_pin" data-lat="%1$s" data-lng="%2$s" data-title="%5$s">
@@ -116,16 +104,12 @@ class ET_Builder_Module_Map_Item extends ET_Builder_Module {
 			</div>',
 			esc_attr( $pin_address_lat ),
 			esc_attr( $pin_address_lng ),
-			esc_html( $title ),
-			( '' != $content ? sprintf( '<div class="infowindow">%1$s</div>', $content ) : '' ),
+			et_core_esc_previously( $title ),
+			( ! empty( $content ) ? sprintf( '<div class="infowindow">%1$s</div>', $content ) : '' ),
 			esc_attr( $title )
 		);
 
 		return $output;
-	}
-
-	public function _add_additional_shadow_fields() {
-
 	}
 }
 

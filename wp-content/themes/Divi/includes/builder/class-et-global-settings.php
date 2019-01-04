@@ -16,8 +16,16 @@ class ET_Global_Settings {
 	}
 
 	private static function set_values() {
+		$hover = et_pb_hover_options();
+
 		$font_defaults_h1 = array(
 			'size'           => '30px',
+			'letter_spacing' => '0px',
+			'line_height'    => '1em',
+		);
+
+		$font_defaults_h2 = array(
+			'size'           => '26px',
 			'letter_spacing' => '0px',
 			'line_height'    => '1em',
 		);
@@ -69,8 +77,8 @@ class ET_Global_Settings {
 			'all_buttons_border_radius'                              => '3',
 			'all_buttons_spacing'                                    => '0',
 			'all_buttons_font_style'                                 => '',
-			'all_buttons_border_radius_hover'                        => '3',
-			'all_buttons_spacing_hover'                              => '0',
+			$hover->get_hover_field( 'all_buttons_border_radius' )   => '3',
+			$hover->get_hover_field( 'all_buttons_spacing' )         => '0',
 			// Global: Background Gradients
 			'all_background_gradient_start'                          => $background_gradient_defaults['start'],
 			'all_background_gradient_end'                            => $background_gradient_defaults['end'],
@@ -129,6 +137,9 @@ class ET_Global_Settings {
 			'et_pb_blog-body_font_size'                              => $font_defaults['size'],
 			'et_pb_blog-body_line_height'                            => $font_defaults['line_height'],
 			'et_pb_blog-body_letter_spacing'                         => $font_defaults['letter_spacing'],
+			'et_pb_blog-pagination_font_size'                        => $font_defaults['size'],
+			'et_pb_blog-pagination_line_height'                      => $font_defaults['line_height'],
+			'et_pb_blog-pagination_letter_spacing'                   => $font_defaults['letter_spacing'],
 			'et_pb_blog_masonry-header_font_size'                    => '26',
 			'et_pb_blog_masonry-header_font_style'                   => '',
 			'et_pb_blog_masonry-meta_font_size'                      => '14',
@@ -158,6 +169,9 @@ class ET_Global_Settings {
 			'et_pb_circle_counter-number_line_height'                => '225px',
 			'et_pb_circle_counter-number_letter_spacing'             => $font_defaults['letter_spacing'],
 			'et_pb_circle_counter-circle_color_alpha'                => '0.1',
+			// Module: Comments
+			'et_pb_comments-header_font_size'                        => $font_defaults_h1['size'],
+			'et_pb_comments-header_line_height'                      => $font_defaults_h1['line_height'],
 			// Module: Contact Form
 			'et_pb_contact_form-title_font_size'                     => '26',
 			'et_pb_contact_form-title_font_style'                    => '',
@@ -226,7 +240,6 @@ class ET_Global_Settings {
 			'et_pb_cta-background_repeat'                            => $background_image_defaults['repeat'],
 			'et_pb_cta-background_blend'                             => $background_image_defaults['blend'],
 			// Module: Divider
-			'et_pb_divider-show_divider'                             => 'off',
 			'et_pb_divider-divider_style'                            => 'solid',
 			'et_pb_divider-divider_weight'                           => '1',
 			'et_pb_divider-height'                                   => '1',
@@ -237,6 +250,7 @@ class ET_Global_Settings {
 			'et_pb_filterable_portfolio-title_letter_spacing'        => $font_defaults['letter_spacing'],
 			'et_pb_filterable_portfolio-title_line_height'           => $font_defaults['line_height'],
 			'et_pb_filterable_portfolio-title_font_style'            => '',
+			'et_pb_filterable_portfolio-title_color'                 => '#333333',
 			'et_pb_filterable_portfolio-caption_font_size'           => '14',
 			'et_pb_filterable_portfolio-caption_letter_spacing'      => $font_defaults['letter_spacing'],
 			'et_pb_filterable_portfolio-caption_line_height'         => $font_defaults['line_height'],
@@ -245,7 +259,10 @@ class ET_Global_Settings {
 			'et_pb_filterable_portfolio-filter_letter_spacing'       => $font_defaults['letter_spacing'],
 			'et_pb_filterable_portfolio-filter_line_height'          => $font_defaults['line_height'],
 			'et_pb_filterable_portfolio-filter_font_style'           => '',
-			'et_pb_filterable_portfolio-title_color'                 => '#333333',
+			'et_pb_filterable_portfolio-pagination_font_size'        => '14',
+			'et_pb_filterable_portfolio-pagination_letter_spacing'   => $font_defaults['letter_spacing'],
+			'et_pb_filterable_portfolio-pagination_line_height'      => $font_defaults['line_height'],
+			'et_pb_filterable_portfolio-pagination_font_style'       => '',
 			'et_pb_filterable_portfolio-background_size'             => $background_image_defaults['size'],
 			'et_pb_filterable_portfolio-background_position'         => $background_image_defaults['position'],
 			'et_pb_filterable_portfolio-background_repeat'           => $background_image_defaults['repeat'],
@@ -306,6 +323,8 @@ class ET_Global_Settings {
 			'et_pb_gallery-caption_color'                            => '#f3f3f3',
 			'et_pb_gallery-caption_line_height'                      => '18px',
 			'et_pb_gallery-caption_letter_spacing'                   => $font_defaults['letter_spacing'],
+			'et_pb_gallery-pagination_font_size'                     => '16px',
+			'et_pb_gallery-pagination_line_height'                   => '1em',
 			// Module: Image
 			'et_pb_image-animation'                                  => 'left',
 			// Module: Login
@@ -342,11 +361,15 @@ class ET_Global_Settings {
 			'et_pb_portfolio-title_letter_spacing'                   => $font_defaults['letter_spacing'],
 			'et_pb_portfolio-title_line_height'                      => $font_defaults['line_height'],
 			'et_pb_portfolio-title_font_style'                       => '',
+			'et_pb_portfolio-title_color'                            => '#333333',
 			'et_pb_portfolio-caption_font_size'                      => '14',
 			'et_pb_portfolio-caption_letter_spacing'                 => $font_defaults['letter_spacing'],
 			'et_pb_portfolio-caption_line_height'                    => $font_defaults['line_height'],
 			'et_pb_portfolio-caption_font_style'                     => '',
-			'et_pb_portfolio-title_color'                            => '#333333',
+			'et_pb_portfolio-pagination_font_size'                   => '14',
+			'et_pb_portfolio-pagination_letter_spacing'              => $font_defaults['letter_spacing'],
+			'et_pb_portfolio-pagination_line_height'                 => $font_defaults['line_height'],
+			'et_pb_portfolio-pagination_font_style'                  => '',
 			'et_pb_portfolio-background_size'                        => $background_image_defaults['size'],
 			'et_pb_portfolio-background_position'                    => $background_image_defaults['position'],
 			'et_pb_portfolio-background_repeat'                      => $background_image_defaults['repeat'],
@@ -434,6 +457,8 @@ class ET_Global_Settings {
 			'et_pb_signup-body_font_size'                            => $font_defaults['size'],
 			'et_pb_signup-body_letter_spacing'                       => $font_defaults['letter_spacing'],
 			'et_pb_signup-body_line_height'                          => $font_defaults['line_height'],
+			'et_pb_signup-result_message_font_size'                  => $font_defaults_h2['size'],
+			'et_pb_signup-result_message_line_height'                => $font_defaults_h2['line_height'],
 			'et_pb_signup-header_font_style'                         => '',
 			'et_pb_signup-padding'                                   => '20',
 			'et_pb_signup-focus_border_color'                        => '#ffffff',
@@ -441,6 +466,9 @@ class ET_Global_Settings {
 			'et_pb_signup-background_position'                       => $background_image_defaults['position'],
 			'et_pb_signup-background_repeat'                         => $background_image_defaults['repeat'],
 			'et_pb_signup-background_blend'                          => $background_image_defaults['blend'],
+			'et_pb_signup-form_field_font_size'                      => '14',
+			'et_pb_signup-form_field_line_height'                    => $font_defaults['line_height'],
+			'et_pb_signup_form-form_field_letter_spacing'            => $font_defaults['letter_spacing'],
 			// Module: Slider Item (Slide)
 			'et_pb_slide-header_font_size'                           => '26px',
 			'et_pb_slide-header_color'                               => '#ffffff',
@@ -462,7 +490,6 @@ class ET_Global_Settings {
 			'et_pb_slider-body_font_style'                           => '',
 			'et_pb_slider-padding'                                   => '16',
 			'et_pb_slider-header_color'                              => '#ffffff',
-			'et_pb_slider-header_line_height'                        => '1em',
 			'et_pb_slider-body_color'                                => '#ffffff',
 			'et_pb_slider-background_size'                           => $background_image_defaults['size'],
 			'et_pb_slider-background_position'                       => $background_image_defaults['position'],
@@ -553,7 +580,7 @@ class ET_Global_Settings {
 			'et_pb_toggle-background_blend'                          => $background_image_defaults['blend'],
 		);
 
-		if ( ! et_is_builder_plugin_active() ) {
+		if ( et_builder_has_limitation('forced_icon_color_default') ) {
 			$defaults['et_pb_gallery-zoom_icon_color']              = et_get_option( 'accent_color', '#2ea3f2' );
 			$defaults['et_pb_portfolio-zoom_icon_color']            = et_get_option( 'accent_color', '#2ea3f2' );
 			$defaults['et_pb_filterable_portfolio-zoom_icon_color'] = et_get_option( 'accent_color', '#2ea3f2' );
@@ -565,6 +592,7 @@ class ET_Global_Settings {
 				'default' => $default_value,
 			);
 
+			// Plugin don't have module specific customizer options like Divi theme, so $actual_value is always = ''
 			$actual_value = ! et_is_builder_plugin_active() ? et_get_option( $setting_name, '', '', true ) : '';
 			if ( '' !== $actual_value ) {
 				$defaults[ $setting_name ]['actual']  = $actual_value;
